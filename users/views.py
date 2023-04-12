@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib.auth.models import User
 # Create your views here.
 def register(request):
     if request.method == 'GET':
@@ -13,6 +14,13 @@ def register(request):
         if not password == confirm_password:
             return redirect('/users/register')
 
-        return HttpResponse("teste")
-
+        #Validar força da senha 
+        user = User.objects.filter(username = user_name)
+        
+        if user.exists():
+            return redirect('/users/register')
+        
+        user = User.objects.create_user(username = user_name, email  = email, password = password)
+        user.save()
+        return HttpResponse("Usuário Adicionado")
     
