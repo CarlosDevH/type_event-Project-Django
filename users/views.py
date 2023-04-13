@@ -4,7 +4,9 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.messages import constants
 from django.urls import reverse
+from django.contrib import auth
 # Create your views here.
+
 def register(request):
     if request.method == 'GET':
         return render(request, 'register.html')
@@ -31,3 +33,18 @@ def register(request):
 
         return redirect(reverse('login'))
     
+def login(request):
+    if request.method == 'GET':
+        return render(request, 'login.html')
+    elif request.method == "POST":
+        user_name = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = auth.authenticate(username = user_name, password = password)
+
+        if not user:
+            messages.add_message(request, constants.ERROR, 'Usuário ou senha inválida' )
+            return redirect(reverse('login'))
+        
+        auth.login(request, user)
+        return redirect('/event/new_event/')
