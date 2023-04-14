@@ -33,10 +33,16 @@ def new_event(request):
             cor_principal = cor_principal,
             cor_secundaria = cor_secundaria,
             cor_fundo = cor_fundo,
-            logo = logo
+            logo = logo,
         )
 
         event.save()
 
         messages.add_message(request, constants.SUCCESS, 'Evento cadastrado com sucesso')
         return redirect(reverse('new_event'))
+    
+def manage_event(request):
+    if request.method == "GET":
+        events = Event.objects.filter(creator = request.user)
+        return render(request, 'manage_event.html', {'events': events})
+    

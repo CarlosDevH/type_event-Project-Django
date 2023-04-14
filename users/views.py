@@ -27,6 +27,10 @@ def register(request):
             messages.add_message(request, constants.ERROR, 'Já existe um usuário cadastrado com esse email')
             return redirect(reverse('register'))
         
+        if user_name == '' or email == '' or password == '':
+            messages.add_message(request, constants.ERROR, 'Insira todos os dados')
+            return redirect(reverse('register'))
+        
         user = User.objects.create_user(username = user_name, email = email, password = password)
         user.save()
         messages.add_message(request, constants.SUCCESS, 'Usuário cadastrado com sucesso!')
