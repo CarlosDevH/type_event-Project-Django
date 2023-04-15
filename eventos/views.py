@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Event
 from django.urls import reverse
@@ -43,6 +43,15 @@ def new_event(request):
     
 def manage_event(request):
     if request.method == "GET":
+        name = request.GET.get('name')
         events = Event.objects.filter(creator = request.user)
+
+        if name:
+            events = events.filter(name__contains=name)
+
         return render(request, 'manage_event.html', {'events': events})
-    
+
+def register_event(request, id):
+    event = get_object_or_404(Event, id = id)
+    if request.method == 'GET':
+         return render(request, 'register_event.html', {'event': event})

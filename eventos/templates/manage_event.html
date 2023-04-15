@@ -10,9 +10,9 @@
         <br>
         <div class="row">
             <div class="col-md">
-                <form action="" method="titulo">
+                <form action="{% url 'manage_event' %}" method="GET">
                 <label>Título:</label>
-                <input type="text" placeholder="Título..." class="form-control" name="nome">
+                <input type="text" placeholder="Título..." class="form-control" name="name">
             </div>
 
             <div class="col-md">
@@ -35,7 +35,7 @@
             {% for event in events %}
             
             <tr class="{% cycle 'linha' 'linha2' %}">
-                <td width="10%"><a href="#"><img width="" src="/media/{{event.logo}}"></a></td>
+                <td width="10%"><a href="#"><img width="50x" src="/media/{{event.logo}}"></a></td>
                 <td>{{event.name}}</td>
                 <td>{{event.description}}</td>
                 <td>{{event.start_date}}</td>
