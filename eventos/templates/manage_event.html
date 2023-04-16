@@ -35,12 +35,12 @@
             {% for event in events %}
             
             <tr class="{% cycle 'linha' 'linha2' %}">
-                <td width="10%"><a href="#"><img width="50x" src="/media/{{event.logo}}"></a></td>
+                <td width="10%"><a href="{% url "participants_event" event.id %}"><img width="50x" src="/media/{{event.logo}}"></a></td>
                 <td>{{event.name}}</td>
                 <td>{{event.description}}</td>
                 <td>{{event.start_date}}</td>
                 <td>{{event.end_date}}</td>
-                <td>Link de inscrição</td>
+                <td>127.0.0.1:8000/events/register_event/{{event.id}}</td>
             </tr>
             {% endfor %}
                 

@@ -7,6 +7,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert {{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                <br>
                 <img width="100%" src="{{event.logo.url}}">
                 <br>
                 <br>
@@ -19,7 +25,15 @@
                 <br>
                 <p>{{event.start_date}} a {{event.end_date}}</p>
                 <br>
-                <a style="text-decoration: none;" class="btn-principal" href="#">QUERO PARTICIPAR</a>
+
+                {% if request.user in event.participants.all %}
+                    <input style="border-color: green;" type="submit" class="btn-principal" value="JÁ ESTÁ PARTICIPANDO" disabled>
+                {% else%}
+                    <form action="{% url 'register_event' event.id %}" method="POST">{% csrf_token %}
+                        <input type="submit" class="btn-principal" value="QUERO PARTICIPAR">
+                    </form>
+                {% endif %}
+                
             
             </div>
         </div>

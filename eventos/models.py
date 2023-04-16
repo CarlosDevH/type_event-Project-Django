@@ -9,6 +9,7 @@ class Event(models.Model):
     end_date = models.DateField()
     workload = models.IntegerField()
     logo = models.ImageField(upload_to = 'logo')
+    participants = models.ManyToManyField(User, related_name="event_participant", null=True, blank=True)
 
     #paletas de cores
     cor_principal = models.CharField(max_length = 7)
@@ -17,3 +18,8 @@ class Event(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
+class Certificate(models.Model):
+    certificate = models.ImageField(upload_to="certificates")
+    participants = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    event = models.ForeignKey(Event, on_delete=models.DO_NOTHING)
