@@ -156,6 +156,6 @@ def seek_certificate(request, id):
 
     if not certificate:
         messages.add_message(request, constants.ERROR, 'Esse certificado ainda não foi gerado')
-        return redirect(reverse('certificates_event', kwargs = {'id':event }))
-    
-    return redirect(certificate.certificates.url)
+        return redirect(reverse('certificates_event', kwargs ={"id":event.id}))
+    else:
+        return redirect(certificate.certificate.url)
